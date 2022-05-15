@@ -1,8 +1,6 @@
-const displayController = (() => {
-})();
-
 const gameBoard = (() => {
     let board = [];
+    let entries = [];
     let turn = 0;
     const container = document.querySelector('.container');
 
@@ -44,34 +42,49 @@ const gameBoard = (() => {
     }
 
     function userSelection() {
-        this.selectionMade = false;
-        if (this.selectionMade) {
-            return;
-        } else if (turn === 0) {
+        if (turn === 0) {
             this.textContent = 'X';
             turn = 1;
-            this.selectionMade = true;
+            addToEntries(this);
         } else if (turn === 1) {
             this.textContent = 'O';
             turn = 0;
-            this.selectionMade = true;
+            addToEntries(this);
         }
-        console.log('hello');
+        console.log(entries);
+    }
+
+    function addToEntries(item, playerNum) {
+        entries.push(item);
+    }
+
+    function checkIfWinner() {
+        for (let entry of entries) {
+            // if textContent = X... 
+            // and there are 3 or more in row/column/diagonal 
+            // win
+        }
     }
 
     createBoard();
 
     return {
         createBoard: createBoard,
-        board: board
+        board: board,
+        entries: entries
     };
 })();
 
+const displayController = (() => {
+    function win() {
+
+    }
+
+
+})();
 
 const Player = (playerNum) => {
 
 }
 
-let newBoard = gameBoard.board;
-// console.log(gameBoard.board);
-console.log(newBoard);
+console.log(gameBoard.board);
