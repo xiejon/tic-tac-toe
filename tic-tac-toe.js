@@ -29,14 +29,14 @@ const gameBoard = (() => {
                 board[i].column = i - 6;
             }
         }
-        
-        console.log(board);
     }
 
+    createBoard();
     // 
 
     return {
-        createBoard: createBoard
+        createBoard: createBoard,
+        board: board
     };
 })();
 
@@ -44,5 +44,6 @@ const displayController = (() => {
 
 })();
 
-
-console.log(gameBoard.createBoard());
+let newBoard = gameBoard.board;
+// console.log(gameBoard.board);
+console.log(newBoard);
