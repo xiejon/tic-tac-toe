@@ -40,16 +40,21 @@ const gameBoard = (() => {
     }
 
     function addClickListener(item) {
-        item.addEventListener('click', userSelection);
+        item.addEventListener('click', userSelection, {once : true});
     }
 
     function userSelection() {
-        if (turn === 0) {
+        this.selectionMade = false;
+        if (this.selectionMade) {
+            return;
+        } else if (turn === 0) {
             this.textContent = 'X';
             turn = 1;
+            this.selectionMade = true;
         } else if (turn === 1) {
             this.textContent = 'O';
             turn = 0;
+            this.selectionMade = true;
         }
         console.log('hello');
     }
