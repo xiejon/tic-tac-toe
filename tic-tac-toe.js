@@ -18,20 +18,19 @@ const gameBoard = (() => {
 
     function addAttributes(index) {
         if (index < 3) {
-            if (index === 0) board[index].diag0 = 0;
-            if (index === 2) board[index].diag1 = 0;
+            if (index === 0) board[index].diag = 0;
+            if (index === 2) board[index].diag = 1;
             board[index].row = 0;
             board[index].column = index;
         } else if (index >= 3 && index < 6) {
             if (index === 4) {
-                board[index].diag0 = 0;
-                board[index].diag1 = 0;
+                board[index].diag = 2;
             }
             board[index].row = 1;
             board[index].column = index - 3;
         } else if (index >= 6 && index < 9) {
-            if (index === 6) board[index].diag1 = 0;
-            if (index === 8) board[index].diag0 = 0;
+            if (index === 6) board[index].diag = 1;
+            if (index === 8) board[index].diag = 0;
             board[index].row = 2;
             board[index].column = index - 6;
         }
@@ -97,7 +96,8 @@ const gameBoard = (() => {
         function diagonals(num) {
             if (num === 0) diag0++; 
             if (num === 1) diag1++;
-            if (diag0 >= 3 || diag1 >= 3) win = true;
+            if (num === 2) diag0++, diag1++;
+            if (diag0 === 3 || diag1 === 3) win = true;
         }
 
         for (let item of array) {
