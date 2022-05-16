@@ -51,6 +51,7 @@ const gameBoard = (() => {
             turn = 0;
             addToEntries(this);
         }
+        checkIfWinner();
         console.log(entries);
     }
 
@@ -59,11 +60,52 @@ const gameBoard = (() => {
     }
 
     function checkIfWinner() {
-        for (let entry of entries) {
-            // if textContent = X... 
-            // and there are 3 or more in row/column/diagonal 
-            // win
+        let playerOneEntries = entries.filter(index => index.textContent === "X");
+        let playerTwoEntries = entries.filter(index => index.textContent === "O");
+        let playerOne = checkSelections(playerOneEntries);
+        if (playerOne) alert("Player One wins!");
+        let playerTwo = checkSelections(playerTwoEntries);
+        if (playerTwo) alert("Player Two wins!");
+        console.log(playerOne);
+    }
+
+    function checkSelections(array) {
+        let row0 = 0;
+        let row1 = 0;
+        let row2 = 0;
+        let col0 = 0;
+        let col1 = 0;
+        let col2 = 0;
+        let diag0 = 0;
+        let diag1 = 0;
+        let win = false;
+
+        function rows(num) {
+           if (num === 0) row0++; 
+           if (num === 1) row1++;
+           if (num === 2) row2++;
+           if (row0 === 3 || row1 === 3 || row2 === 3) win = true;
         }
+
+        function columns(num) {
+            if (num === 0) col0++; 
+            if (num === 1) col1++;
+            if (num === 2) col2++;
+            if (col0 === 3 || col1 === 3 || col2 === 3) win = true;
+         }
+
+        function diagonals(num) {
+            if (num === 0) diag0++; 
+            if (num === 1) diag1++;
+            if (diag0 >= 3 || diag1 >= 3) win = true;
+        }
+
+        for (let item of array) {
+            rows(item.row);
+            columns(item.column);
+            diagonals(item.diag);
+        }
+        return win;
     }
 
     createBoard();
