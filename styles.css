@@ -1,13 +1,48 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 6fr 1fr;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .game {
-    height: 500px;
-    width: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .game div {
-    height: 200px;
-    width: 200px;
+    height: 170px;
+    width: 170px;
     border: 1px solid black;
+}
+
+.players {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    font-size: 20px;;
+}
+
+.buttons {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.reset {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
 }

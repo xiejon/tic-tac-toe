@@ -67,8 +67,14 @@ const gameBoard = (() => {
         let playerTwoEntries = entries.filter(index => index.textContent === "O");
         let playerOne = checkSelections(playerOneEntries);
         let playerTwo = checkSelections(playerTwoEntries);
-        if (playerOne) alert("Player One wins!");
-        if (playerTwo) alert("Player Two wins!");
+        if (playerOne) {
+            alert("Player One wins!");
+            displayController.resetGame();
+        }
+        if (playerTwo) {
+            alert("Player Two wins!");
+            displayController.resetGame();
+        }
     }
 
     function checkSelections(array) {
@@ -162,6 +168,7 @@ const displayController = (() => {
     reset();
 
     return {
+        resetGame: resetGame,
         showTurn: showTurn
     }
 })();
