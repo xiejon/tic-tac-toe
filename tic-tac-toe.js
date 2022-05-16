@@ -2,18 +2,22 @@ const gameBoard = (() => {
     let board = [];
     let entries = [];
     let turn = 0;
-    const container = document.querySelector('.container');
 
     // create basic empty board with attributes and event listeners
-    function createBoard() {
+    const createBoard = () => {
         for (let i = 0; i < 9; i++) {
-            const box = document.createElement('div');
-            box.classList.add('.box');
-            container.appendChild(box);
-            board.push(box);
+            createBox();
             addAttributes(i);
-            addClickListener(box);
         }
+    }
+
+    function createBox() {
+        const container = document.querySelector('.container');
+        const box = document.createElement('div');
+        box.classList.add('box');
+        container.appendChild(box);
+        board.push(box);
+        addClickListener(box);
     }
 
     function addAttributes(index) {
@@ -23,9 +27,7 @@ const gameBoard = (() => {
             board[index].row = 0;
             board[index].column = index;
         } else if (index >= 3 && index < 6) {
-            if (index === 4) {
-                board[index].diag = 2;
-            }
+            if (index === 4) board[index].diag = 2;
             board[index].row = 1;
             board[index].column = index - 3;
         } else if (index >= 6 && index < 9) {
@@ -37,10 +39,10 @@ const gameBoard = (() => {
     }
 
     function addClickListener(item) {
-        item.addEventListener('click', userSelection, {once : true});
+        item.addEventListener('click', getSelection, {once : true});
     }
 
-    function userSelection() {
+    function getSelection() {
         if (turn === 0) {
             this.textContent = 'X';
             turn = 1;
@@ -51,10 +53,10 @@ const gameBoard = (() => {
             addToEntries(this);
         }
         checkIfWinner();
-        console.log(entries);
     }
 
-    function addToEntries(item, playerNum) {
+    // keep track of which divs were selected in separate array
+    function addToEntries(item) {
         entries.push(item);
     }
 
@@ -62,21 +64,16 @@ const gameBoard = (() => {
         let playerOneEntries = entries.filter(index => index.textContent === "X");
         let playerTwoEntries = entries.filter(index => index.textContent === "O");
         let playerOne = checkSelections(playerOneEntries);
-        if (playerOne) alert("Player One wins!");
         let playerTwo = checkSelections(playerTwoEntries);
+        if (playerOne) alert("Player One wins!");
         if (playerTwo) alert("Player Two wins!");
-        console.log(playerOne);
     }
 
     function checkSelections(array) {
-        let row0 = 0;
-        let row1 = 0;
-        let row2 = 0;
-        let col0 = 0;
-        let col1 = 0;
-        let col2 = 0;
-        let diag0 = 0;
-        let diag1 = 0;
+        // keep track of count in each row/column/diag
+        let [row0, row1, row2] = [0, 0, 0]
+        let [col0, col1, col2] = [0, 0, 0]
+        let [diag0, diag1] = [0, 0]
         let win = false;
 
         function rows(num) {
@@ -100,33 +97,50 @@ const gameBoard = (() => {
             if (diag0 === 3 || diag1 === 3) win = true;
         }
 
-        for (let item of array) {
-            rows(item.row);
-            columns(item.column);
-            diagonals(item.diag);
+        for (let selection of array) {
+            rows(selection.row);
+            columns(selection.column);
+            diagonals(selection.diag);
         }
         return win;
     }
 
     createBoard();
 
+    const resetBoard = () => {
+        board = [];
+        entries = [];
+        turn = 0;
+        clearBoxes();
+        createBoard();
+    }
+
+    function clearBoxes() {
+        const boxes = document.querySelectorAll('.box');
+        for (let box of boxes) {
+            box.remove();
+        }
+    }
+
     return {
-        createBoard: createBoard,
-        board: board,
+        createBoard,
+        resetBoard,
         entries: entries
     };
 })();
 
 const displayController = (() => {
-    function win() {
 
+    const reset = () => {
+        const resetButton = document.querySelector('.reset');
+        resetButton.addEventListener('click', resetGame);
     }
 
+    function resetGame() {
+        gameBoard.resetBoard();
+    }
+
+    reset();
 
 })();
 
-const Player = (playerNum) => {
-
-}
-
-console.log(gameBoard.board);
