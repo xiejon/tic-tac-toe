@@ -1,12 +1,12 @@
 
-.container {
+.game {
     height: 500px;
     width: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.container div {
+.game div {
     height: 200px;
     width: 200px;
     border: 1px solid black;

@@ -12,7 +12,7 @@ const gameBoard = (() => {
     }
 
     function createBox() {
-        const container = document.querySelector('.container');
+        const container = document.querySelector('.game');
         const box = document.createElement('div');
         box.classList.add('box');
         container.appendChild(box);
@@ -45,10 +45,12 @@ const gameBoard = (() => {
     function getSelection() {
         if (turn === 0) {
             this.textContent = 'X';
+            displayController.showTurn(turn);
             turn = 1;
             addToEntries(this);
         } else if (turn === 1) {
             this.textContent = 'O';
+            displayController.showTurn(turn);
             turn = 0;
             addToEntries(this);
         }
@@ -125,7 +127,8 @@ const gameBoard = (() => {
     return {
         createBoard,
         resetBoard,
-        entries: entries
+        entries: entries,
+        turn: turn
     };
 })();
 
@@ -136,11 +139,30 @@ const displayController = (() => {
         resetButton.addEventListener('click', resetGame);
     }
 
+    const playerOne = document.querySelector('.player-one');
+    const playerTwo = document.querySelector('.player-two');
+
     function resetGame() {
         gameBoard.resetBoard();
+        playerOne.style.color = '';
+        playerTwo.style.color = '';
+    }
+
+    function showTurn(turn) {
+
+        if (turn === 0) {
+            playerOne.style.color = '';
+            playerTwo.style.color = 'yellow';
+        } else if (turn === 1) {
+            playerTwo.style.color = '';
+            playerOne.style.color = 'yellow';
+        }
     }
 
     reset();
 
+    return {
+        showTurn: showTurn
+    }
 })();
 
