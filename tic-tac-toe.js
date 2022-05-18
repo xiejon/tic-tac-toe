@@ -1,7 +1,7 @@
 const gameBoard = (() => {
     let board = [];
     let entries = [];
-    let turn = 0;
+    let turn = null;
 
     // create basic empty board with attributes and event listeners
     const createBoard = () => {
@@ -43,6 +43,10 @@ const gameBoard = (() => {
     }
 
     function getSelection() {
+        // first round
+        if (turn === null) {
+            turn = 0;
+        }
         if (turn === 0) {
             this.textContent = 'X';
             displayController.showTurn(turn);
@@ -138,46 +142,55 @@ const gameBoard = (() => {
 
     return {
         createBoard,
-        resetBoard,
-        entries: entries,
-        turn: turn
+        resetBoard
     };
 })();
 
 const displayController = (() => {
 
-    gameBoard.createBoard();
-
     // select 'player' text
     const playerOne = document.querySelector('.player-one');
     const playerTwo = document.querySelector('.player-two');
+    const green = 'var(--acid-green)';
 
     const addReset = () => {
         const resetButton = document.querySelector('.reset');
         resetButton.addEventListener('click', resetGame);
     }
-    addReset();
 
     function resetGame() {
         gameBoard.resetBoard();
-        playerOne.style.color = '';
-        playerTwo.style.color = '';
+        playerOneColors();
+    }
+
+    function defaultPlayerColor() {
+        playerOne.style.color = green;
     }
 
     function showTurn(turn) {
         if (turn === 0) {
-            playerOne.style.color = '';
-            playerTwo.style.color = 'yellow';
+            playerTwoColors();
         } else if (turn === 1) {
-            playerTwo.style.color = '';
-            playerOne.style.color = 'yellow';
+            playerOneColors();
         }
     }
+
+    function playerOneColors() {
+        playerOne.style.color = green;
+        playerTwo.style.color = '';
+    }
+
+    function playerTwoColors() {
+        playerOne.style.color = '';
+        playerTwo.style.color = green;
+    }
+
+    gameBoard.createBoard();
+    addReset();
+    defaultPlayerColor();
 
     return {
         resetGame: resetGame,
         showTurn: showTurn
     }
 })();
-
-// * code for tie outcome
