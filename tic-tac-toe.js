@@ -38,10 +38,8 @@ const gameBoard = (() => {
         }
     }
 
-    function addClickListener(item) {
-        item.addEventListener('click', getSelection, {once : true});
-    }
-
+    const addClickListener = item => item.addEventListener('click', getSelection, {once : true});
+    
     function getSelection() {
         // first round
         if (turn === null) {
@@ -125,7 +123,7 @@ const gameBoard = (() => {
         return win;
     }
 
-    const resetBoard = () => {
+    function resetBoard() {
         board = [];
         entries = [];
         turn = 0;
@@ -153,7 +151,7 @@ const displayController = (() => {
     const playerTwo = document.querySelector('.player-two');
     const green = 'var(--acid-green)';
 
-    const addReset = () => {
+    function addReset() {
         const resetButton = document.querySelector('.reset');
         resetButton.addEventListener('click', resetGame);
     }
@@ -163,9 +161,7 @@ const displayController = (() => {
         playerOneColors();
     }
 
-    function defaultPlayerColor() {
-        playerOne.style.color = green;
-    }
+    const defaultPlayerColor = () => playerOne.style.color = green;
 
     function showTurn(turn) {
         if (turn === 0) {
@@ -175,12 +171,12 @@ const displayController = (() => {
         }
     }
 
-    function playerOneColors() {
+    const playerOneColors = () => {
         playerOne.style.color = green;
         playerTwo.style.color = '';
     }
 
-    function playerTwoColors() {
+    const playerTwoColors = () => {
         playerOne.style.color = '';
         playerTwo.style.color = green;
     }

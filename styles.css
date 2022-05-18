@@ -32,26 +32,28 @@
     background-color: var(--maximum-green);
 }
 
-.game div {
+.box {
     height: 170px;
     width: 170px;
     border: 0.5px solid var(--blue-sapphire);
-    color: var(--acid-green);
-}
-
-.box {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 100px;
+    color: var(--acid-green);
+}
+
+.box:hover {
+    cursor: pointer;
 }
 
 .players {
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 50px;
-    font-size: 20px;;
+    font-size: 30px;
 }
 
 .buttons {
@@ -67,5 +69,19 @@
     border: none;
     border-radius: 10px;
     background-color: var(--steel-blue);
+    color: var(--acid-green);
+    font-size: 20px;
+}
+
+.reset:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+    transition: 130ms;
+}
+
+.footer {
+    position: absolute;
+    top: 96vh;
+    left: 1vh;
     color: var(--acid-green);
 }
