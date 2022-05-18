@@ -55,6 +55,7 @@ const gameBoard = (() => {
             addToEntries(this);
         }
         checkIfWinner();
+        checkIfTie(entries);
     }
 
     // keep track of which divs were selected in separate array
@@ -63,16 +64,23 @@ const gameBoard = (() => {
     }
 
     function checkIfWinner() {
-        let playerOneEntries = entries.filter(index => index.textContent === "X");
-        let playerTwoEntries = entries.filter(index => index.textContent === "O");
-        let playerOne = checkSelections(playerOneEntries);
-        let playerTwo = checkSelections(playerTwoEntries);
+        const playerOneEntries = entries.filter(index => index.textContent === "X");
+        const playerTwoEntries = entries.filter(index => index.textContent === "O");
+        const playerOne = checkSelections(playerOneEntries);
+        const playerTwo = checkSelections(playerTwoEntries);
         if (playerOne) {
             alert("Player One wins!");
             displayController.resetGame();
         }
         if (playerTwo) {
             alert("Player Two wins!");
+            displayController.resetGame();
+        }
+    }
+
+    function checkIfTie(array) {
+        if (array.length === 9) {
+            alert("Tie!");
             displayController.resetGame();
         }
     }
@@ -113,8 +121,6 @@ const gameBoard = (() => {
         return win;
     }
 
-    createBoard();
-
     const resetBoard = () => {
         board = [];
         entries = [];
@@ -140,13 +146,17 @@ const gameBoard = (() => {
 
 const displayController = (() => {
 
-    const reset = () => {
+    gameBoard.createBoard();
+
+    // select 'player' text
+    const playerOne = document.querySelector('.player-one');
+    const playerTwo = document.querySelector('.player-two');
+
+    const addReset = () => {
         const resetButton = document.querySelector('.reset');
         resetButton.addEventListener('click', resetGame);
     }
-
-    const playerOne = document.querySelector('.player-one');
-    const playerTwo = document.querySelector('.player-two');
+    addReset();
 
     function resetGame() {
         gameBoard.resetBoard();
@@ -155,7 +165,6 @@ const displayController = (() => {
     }
 
     function showTurn(turn) {
-
         if (turn === 0) {
             playerOne.style.color = '';
             playerTwo.style.color = 'yellow';
@@ -165,11 +174,10 @@ const displayController = (() => {
         }
     }
 
-    reset();
-
     return {
         resetGame: resetGame,
         showTurn: showTurn
     }
 })();
 
+// * code for tie outcome

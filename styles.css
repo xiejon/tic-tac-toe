@@ -1,12 +1,22 @@
+:root {
+    --blue-sapphire: #05668D;
+    --steel-blue: #427AA1;
+    --alice-blue: #EBF2FA;
+    --maximum-green: #679436;
+    --acid-green: #A5BE00;
+}
+
 * {
     padding: 0;
     margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .container {
     height: 100vh;
     display: grid;
     grid-template-rows: 6fr 1fr;
+    background-color: var(--blue-sapphire);
 }
 
 .main {
@@ -18,12 +28,22 @@
 .game {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    border-radius: 20px;
+    background-color: var(--maximum-green);
 }
 
 .game div {
     height: 170px;
     width: 170px;
-    border: 1px solid black;
+    border: 0.5px solid var(--blue-sapphire);
+    color: var(--acid-green);
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
 }
 
 .players {
@@ -44,5 +64,8 @@
 .reset {
     height: 40px;
     width: 200px;
+    border: none;
     border-radius: 10px;
+    background-color: var(--steel-blue);
+    color: var(--acid-green);
 }
