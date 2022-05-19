@@ -13,6 +13,7 @@
 }
 
 .container {
+    padding-top: 10px;
     height: 100vh;
     display: grid;
     grid-template-rows: 6fr 1fr;
@@ -80,8 +81,17 @@
 }
 
 .footer {
+    display: flex;
+    align-items: center;
     position: absolute;
-    top: 96vh;
+    top: 95vh;
     left: 1vh;
     color: var(--acid-green);
+}
+
+.footer svg {
+    padding-top: 5px;
+    padding-left: 4px;
+    fill: var(--acid-green);
+    height: 19px;
 }
