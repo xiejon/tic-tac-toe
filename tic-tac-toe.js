@@ -3,11 +3,11 @@ const gameBoard = (() => {
     let entries = [];
     let turn = null;
 
-    // create basic empty board with attributes and event listeners
+    // create basic empty board with object properties and event listeners
     const createBoard = () => {
         for (let i = 0; i < 9; i++) {
             createBox();
-            addAttributes(i);
+            addProperties(i);
         }
     }
 
@@ -20,7 +20,7 @@ const gameBoard = (() => {
         addClickListener(box);
     }
 
-    function addAttributes(index) {
+    function addProperties(index) {
         if (index < 3) {
             if (index === 0) board[index].diag = 0;
             if (index === 2) board[index].diag = 1;
