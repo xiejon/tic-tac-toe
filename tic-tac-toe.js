@@ -7,7 +7,7 @@ const gameBoard = (() => {
     const createBoard = () => {
         for (let i = 0; i < 9; i++) {
             createBox();
-            addProperties(i);
+            addIndex(i);
         }
     }
 
@@ -20,22 +20,8 @@ const gameBoard = (() => {
         addClickListener(box);
     }
 
-    function addProperties(index) {
-        if (index < 3) {
-            if (index === 0) board[index].diag = 0;
-            if (index === 2) board[index].diag = 1;
-            board[index].row = 0;
-            board[index].column = index;
-        } else if (index >= 3 && index < 6) {
-            if (index === 4) board[index].diag = 2;
-            board[index].row = 1;
-            board[index].column = index - 3;
-        } else if (index >= 6 && index < 9) {
-            if (index === 6) board[index].diag = 1;
-            if (index === 8) board[index].diag = 0;
-            board[index].row = 2;
-            board[index].column = index - 6;
-        }
+    function addIndex(value) {
+        board[value].index = value;
     }
 
     const addClickListener = item => item.addEventListener('click', getSelection, {once : true});
@@ -66,8 +52,8 @@ const gameBoard = (() => {
     }
 
     function checkIfWinner() {
-        const playerOneEntries = entries.filter(index => index.textContent === "X");
-        const playerTwoEntries = entries.filter(index => index.textContent === "O");
+        const playerOneEntries = getIndexes(entries, "X");
+        const playerTwoEntries = getIndexes(entries, "O");
         const playerOne = checkSelections(playerOneEntries);
         const playerTwo = checkSelections(playerTwoEntries);
         if (playerOne) {
@@ -80,6 +66,15 @@ const gameBoard = (() => {
         }
     }
 
+    // get index values for each player entry
+    function getIndexes(playerEntries, boxContent) {
+        let array = [];
+        // filter out other player's entries
+        let result = playerEntries.filter(item => item.textContent === boxContent);
+        result.forEach(element => array.push(element.index));
+        return array;
+    }
+
     function checkIfTie(array) {
         if (array.length === 9) {
             alert("Tie!");
@@ -88,37 +83,29 @@ const gameBoard = (() => {
     }
 
     function checkSelections(array) {
-        // keep track of count in each row/column/diag
-        let [row0, row1, row2] = [0, 0, 0]
-        let [col0, col1, col2] = [0, 0, 0]
-        let [diag0, diag1] = [0, 0]
         let win = false;
 
-        function rows(num) {
-           if (num === 0) row0++; 
-           if (num === 1) row1++;
-           if (num === 2) row2++;
-           if (row0 === 3 || row1 === 3 || row2 === 3) win = true;
-        }
+        let winPattern = [
+            // rows
+            [0, 1, 2],
+            [3, 4, 5], 
+            [6, 7, 8], 
+            // columns
+            [0, 3, 6], 
+            [1, 4, 7],
+            [2, 5, 8],
+            // diagonals
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
 
-        function columns(num) {
-            if (num === 0) col0++; 
-            if (num === 1) col1++;
-            if (num === 2) col2++;
-            if (col0 === 3 || col1 === 3 || col2 === 3) win = true;
-         }
-
-        function diagonals(num) {
-            if (num === 0) diag0++; 
-            if (num === 1) diag1++;
-            if (num === 2) diag0++, diag1++;
-            if (diag0 === 3 || diag1 === 3) win = true;
-        }
-
-        for (let selection of array) {
-            rows(selection.row);
-            columns(selection.column);
-            diagonals(selection.diag);
+        for (let i = 0; i < 8; i++) {
+            console.log(winPattern[i]);
+            // console.log(entries);
+            if (winPattern[i].every(element => array.includes(element))) {
+                console.log(winPattern[i]);
+                win = true;
+            }
         }
         return win;
     }
@@ -137,7 +124,6 @@ const gameBoard = (() => {
             box.remove();
         }
     }
-
     return {
         createBoard,
         resetBoard
