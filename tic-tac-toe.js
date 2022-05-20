@@ -84,7 +84,6 @@ const gameBoard = (() => {
 
     function checkSelections(array) {
         let win = false;
-
         let winPattern = [
             // rows
             [0, 1, 2],

@@ -27,10 +27,15 @@ After watching a video series on [Modular Javascript](https://www.youtube.com/wa
 
 1. Determining outcome of game
     - My solution to this problem was not ideal. I added row/column/diagonal properties to each box on the gameboard. Once a player selected a box, I would copy this object into a new 'entries' array. Finally, while changing player turn through the getSelection function, I checked if there was a winner through another checkSelections function, which kept track of the selected entries and recorded instances of rows/columns/diagonal. Once there were 3 instances, checkSelections returned a true boolean.
-    - There is very likely a simpler and more elegant solution that doesn't require the use of so many arrays or the individual prescription of row/column/diagonal properties. 
+    - There is very likely a simpler and more elegant solution that doesn't require the use of so many arrays or the individual prescription of row/column/diagonal properties. (*Edit 5/20/2022* I revisited this code and found a better solution to determine game outcome. Scroll to the bottom of the page for details.)
 
 ## Areas for Improvement
 - With better planning, I might have been able to design a more efficient solution and to structure the code better. Right now, I have two modules: gameBoard and displayController, but the functions that each module contains are intertwined.  
 - Giving players the option to choose X or O 
 - Allowing players to play 'best of 3' or 'best of 5' 
 - Creating an AI to for an individual to play against
+
+** Edit 5/20/2022 ** 
+- I removed the individual row/col/diagonal object properties and replaced it with a single index value. I then compared these index numbers with 8 possible win patterns and checked if the array of user-selected indexes contained these values. 
+- I encapsulated the code to create an array of index values in the function "getIndexes". 
+
